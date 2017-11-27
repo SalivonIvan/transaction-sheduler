@@ -5,6 +5,7 @@ import com.datastech.transactionsheduler.TransactionShedulerApplication;
 import com.datastech.transactionsheduler.TransferDTO;
 import org.apache.camel.ProducerTemplate;
 import org.apache.camel.test.spring.CamelSpringBootRunner;
+import org.bson.types.ObjectId;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -27,10 +28,15 @@ public class JobRepositoryIT {
     @Test
     public void testCreateJob() {
         TransferDTO job = new TransferDTO();
-        job.setData("data");
+        job.setData("data1");
         job.setName("new a job");
+        job.set_id(1);
         Object response = template.requestBody(JobRepository.CREATE_JOB, job);
-        Assert.assertNotNull(response);
+        job.setData("data2");
+        job.set_id(2);
+        response = template.requestBody(JobRepository.CREATE_JOB, job);
+        Object response1 = template.requestBody(JobRepository.GET_JOBS,"{\"name\":\"new a job\"}");
+        Assert.assertNotNull(response1);
     }
 
     @Test

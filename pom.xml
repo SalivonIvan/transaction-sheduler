@@ -62,6 +62,11 @@
             <artifactId>camel-mongodb</artifactId>
             <version>${camel.version}</version> <!-- use the same version as your Camel core version -->
         </dependency>
+        <dependency>
+            <groupId>org.apache.camel</groupId>
+            <artifactId>camel-gson</artifactId>
+            <version>${camel.version}</version> <!-- use the same version as your Camel core version -->
+        </dependency>
 
         <!--Test-->
         <dependency>
