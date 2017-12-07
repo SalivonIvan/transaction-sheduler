@@ -1,9 +1,6 @@
 package com.datastech.transactionsheduler.route.service;
 
-import com.datastech.transactionsheduler.TransferDTO;
 import com.datastech.transactionsheduler.route.repository.JobRepository;
-import com.google.gson.reflect.TypeToken;
-import java.util.List;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.model.dataformat.JsonLibrary;
 import org.springframework.stereotype.Component;

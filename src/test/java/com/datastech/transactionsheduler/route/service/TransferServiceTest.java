@@ -1,18 +1,15 @@
 package com.datastech.transactionsheduler.route.service;
 
 import com.datastech.transactionsheduler.TransactionShedulerApplication;
-import com.datastech.transactionsheduler.TransferDTO;
-import com.datastech.transactionsheduler.route.repository.JobRepository;
+import com.datastech.transactionsheduler.dto.TransferDTO;
+
 import java.util.List;
 import org.apache.camel.ProducerTemplate;
 import org.apache.camel.test.spring.CamelSpringBootRunner;
 import org.junit.After;
-import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
-import static org.junit.Assert.*;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;

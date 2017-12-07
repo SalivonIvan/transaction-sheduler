@@ -1,4 +1,4 @@
-package com.datastech.transactionsheduler;
+package com.datastech.transactionsheduler.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;

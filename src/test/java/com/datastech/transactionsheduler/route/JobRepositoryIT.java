@@ -2,10 +2,9 @@ package com.datastech.transactionsheduler.route;
 
 import com.datastech.transactionsheduler.route.repository.JobRepository;
 import com.datastech.transactionsheduler.TransactionShedulerApplication;
-import com.datastech.transactionsheduler.TransferDTO;
+import com.datastech.transactionsheduler.dto.TransferDTO;
 import org.apache.camel.ProducerTemplate;
 import org.apache.camel.test.spring.CamelSpringBootRunner;
-import org.bson.types.ObjectId;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
