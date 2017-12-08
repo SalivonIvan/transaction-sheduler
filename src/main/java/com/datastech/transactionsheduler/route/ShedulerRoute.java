@@ -13,7 +13,7 @@ public class ShedulerRoute extends RouteBuilder {
 
     @Override
     public void configure() throws Exception {
-        from(MAIN_SHEDULER+trigger).routeId("me test sheduler")
+        from(MAIN_SHEDULER+trigger).routeId("sheduler")
                 .log("Worked Quarze");
     }
 }

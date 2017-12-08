@@ -16,7 +16,8 @@ public class ShedulerManagerRestlet extends RouteBuilder {
                 .get().to(ShedulerManagerService.GET_ALL_SHEDULERS)
                 .post().to(ShedulerManagerService.LAUNCHING_SHEDULER)
                 .patch().to(ShedulerManagerService.UPDATE_STATE_SHEDULER)
-                .post("/stop").to(ShedulerManagerService.STOP_SHEDULER);
+                .post("/stop").to(ShedulerManagerService.STOP_SHEDULER)
+                .delete("/{routeId}").to(ShedulerManagerService.DELETE_SHEDULER);
     }
 
 }
