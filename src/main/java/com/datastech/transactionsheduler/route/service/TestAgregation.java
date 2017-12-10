@@ -27,7 +27,7 @@ public class TestAgregation implements AggregationStrategy {
             EventDrivenConsumerRoute route = newExchange.getIn().getBody(EventDrivenConsumerRoute.class);
             QuartzEndpoint endpoint = (QuartzEndpoint) route.getEndpoint();
             ShedulerDTO sheduler = new ShedulerDTO();
-            sheduler.setRouteId(route.getId());
+            sheduler.setShedulerId(route.getId());
             sheduler.setCron(endpoint.getCron());
             sheduler.setStatus(route.getStatus().toString());
             shedulers.add(sheduler);

@@ -1,8 +1,10 @@
 package com.datastech.transactionsheduler.route.service;
 
 import com.datastech.transactionsheduler.dto.ShedulerDTO;
+import com.datastech.transactionsheduler.service.ShedulerBuilder;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.model.dataformat.JsonLibrary;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 /**
@@ -17,9 +19,11 @@ public class ShedulerManagerService extends RouteBuilder {
     public static final String STOP_SHEDULER = "direct:STOP_SHEDULER";
     public static final String DELETE_SHEDULER = "direct:DELETE_SHEDULER";
 
+    @Autowired
+    private ShedulerBuilder shedulerBuilder;
+
     @Override
     public void configure() throws Exception {
-
         from(GET_ALL_SHEDULERS)
                 .setBody(simple("${camelContext.getRoutes()}"))
                 .split(body(), new TestAgregation())
@@ -39,12 +43,16 @@ public class ShedulerManagerService extends RouteBuilder {
 //                .marshal().json(JsonLibrary.Jackson);
 //                .log("NOT SUPPORTED OPERATION");
 
-        from(LAUNCHING_SHEDULER).log("NOT SUPPORTED OPERATION");
+        from(LAUNCHING_SHEDULER)
+                .marshal().json(JsonLibrary.Jackson)
+                .unmarshal().json(JsonLibrary.Jackson, ShedulerDTO.class)
+                .bean(shedulerBuilder)
+                .log("Sheduler is launching successful");
 
         from(UPDATE_STATE_SHEDULER)
                 .marshal().json(JsonLibrary.Jackson)
                 .unmarshal().json(JsonLibrary.Jackson, ShedulerDTO.class)
-                .setBody(simple("controlbus:route?routeId=${body.routeId}&action=${body.action}"))
+                .setBody(simple("controlbus:route?routeId=${header.routeId}&action=${body.action}"))
                 .routingSlip(simple("${body}"));
 
         from(STOP_SHEDULER).to("controlbus:route?routeId=sheduler1&action=status").log("SUCCESSFUL STOPED ROUTE");

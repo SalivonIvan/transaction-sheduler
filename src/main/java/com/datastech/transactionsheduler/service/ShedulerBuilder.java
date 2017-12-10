@@ -1,5 +1,6 @@
 package com.datastech.transactionsheduler.service;
 
+import com.datastech.transactionsheduler.dto.ShedulerDTO;
 import org.apache.camel.Exchange;
 import org.apache.camel.builder.RouteBuilder;
 import org.springframework.stereotype.Component;
@@ -14,15 +15,25 @@ public class ShedulerBuilder {
     private int halfRouteId2 = 0;
 
     public void addNewRoute(Exchange exchange) throws Exception {
-
+        ShedulerDTO sheduler = exchange.getIn().getBody(ShedulerDTO.class);
+        String shedulerId = prepareShedulerId(sheduler);
         exchange.getContext().addRoutes(new RouteBuilder() {
             @Override
             public void configure() throws Exception {
-                String routeId = halfRouteId1 + (++halfRouteId2);
-                from("quartz2://sheduler"+routeId+"?trigger.repeatInterval=3000").routeId(routeId)
+
+                from("quartz2://" + shedulerId + "?trigger.repeatInterval=3000").routeId(shedulerId)
                         .log("working new route");
             }
         });
+    }
+
+    private String prepareShedulerId(ShedulerDTO sheduler){
+        String shedulerId;
+        if (sheduler.getShedulerId() == null)
+            shedulerId = halfRouteId1 + (++halfRouteId2);
+        else
+            shedulerId = sheduler.getShedulerId();
+        return shedulerId;
     }
 
 }
