@@ -14,23 +14,24 @@ public class ShedulerDTO implements Serializable {
 
     private static final long serialVersionUID = -1193629980047872623L;
 
-    private String shedulerId;
+    private String timerName;
+    private String jobUri;
     private String status;
     private String cron;
     private String action;
     private String groupName;
     private String triggerName;
-    private boolean stateful;
-    private boolean fireNow;
-    private boolean deleteJob = true;
-    private boolean pauseJob;
-    private boolean durableJob;
-    private boolean recoverableJob;
-    private long triggerStartDelay = 500;
-    private int startDelayedSeconds;
-    private boolean autoStartScheduler = true;
-    private boolean usingFixedCamelContextName;
-    private boolean prefixJobNameWithEndpointId;
+    private Boolean stateful;
+    private Boolean fireNow;
+    private Boolean deleteJob;
+    private Boolean pauseJob;
+    private Boolean durableJob;
+    private Boolean recoverableJob;
+    private Long triggerStartDelay;
+    private Integer startDelayedSeconds;
+    private Boolean autoStartScheduler;
+    private Boolean usingFixedCamelContextName;
+    private Boolean prefixJobNameWithEndpointId;
     private Map<String, Object> triggerParameters;
     private Map<String, Object> jobParameters;
     private Calendar customCalendar;

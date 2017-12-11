@@ -11,29 +11,52 @@ import org.springframework.stereotype.Component;
 @Component
 public class ShedulerBuilder {
 
-    private String halfRouteId1 = "sheduler";
-    private int halfRouteId2 = 0;
+    private String halfTimerName1 = "sheduler";
+    private int halfTimerName2 = 0;
 
     public void addNewRoute(Exchange exchange) throws Exception {
         ShedulerDTO sheduler = exchange.getIn().getBody(ShedulerDTO.class);
-        String shedulerId = prepareShedulerId(sheduler);
+        String timerName = prepareTimerName(sheduler);
         exchange.getContext().addRoutes(new RouteBuilder() {
             @Override
             public void configure() throws Exception {
 
-                from("quartz2://" + shedulerId + "?trigger.repeatInterval=3000").routeId(shedulerId)
-                        .log("working new route");
+                from(prepareUri(sheduler)).routeId(timerName)
+                        .to("activemq:Totally.Rocks")
+                        .log("new sheduler working");
             }
         });
     }
 
-    private String prepareShedulerId(ShedulerDTO sheduler){
-        String shedulerId;
-        if (sheduler.getShedulerId() == null)
-            shedulerId = halfRouteId1 + (++halfRouteId2);
+    private String prepareTimerName(ShedulerDTO sheduler) {
+        String timerName;
+        if (sheduler.getTimerName() == null)
+            timerName = halfTimerName1 + (++halfTimerName2);
         else
-            shedulerId = sheduler.getShedulerId();
-        return shedulerId;
+            timerName = sheduler.getTimerName();
+        return timerName;
+    }
+
+    private String prepareUri(ShedulerDTO sheduler) {
+        StringBuilder uri = new StringBuilder("quartz2://");
+        if (sheduler.getGroupName() != null)
+            uri.append(sheduler.getGroupName()).append("/");
+        uri.append(prepareTimerName(sheduler)).append("?");
+        if (sheduler.getTriggerParameters() != null && !sheduler.getTriggerParameters().isEmpty()) {
+            sheduler.getTriggerParameters().forEach((k, v) -> {
+                uri.append("trigger.").append(k).append("=").append(v).append("&");
+            });
+        }
+        if (sheduler.getJobParameters() != null && !sheduler.getJobParameters().isEmpty()) {
+            sheduler.getJobParameters().forEach((k, v) -> {
+                uri.append("job.").append(k).append("=").append(v).append("&");
+            });
+        }
+        if (sheduler.getCron() != null)
+            uri.append("cron=").append(sheduler.getCron()).append("&");
+        if (uri.charAt(uri.length() - 1) == '&')
+            uri.deleteCharAt(uri.length() - 1);
+        return uri.toString();
     }
 
 }

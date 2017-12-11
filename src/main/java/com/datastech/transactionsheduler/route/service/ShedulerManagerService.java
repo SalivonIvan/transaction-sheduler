@@ -29,19 +29,9 @@ public class ShedulerManagerService extends RouteBuilder {
                 .split(body(), new TestAgregation())
 //                .filter(exchange -> exchange.getIn().getBody(Route.class).getConsumer() instanceof QuartzConsumer)
                 .process(exchange -> {
-//                    Route route = exchange.getIn().getBody(Route.class);
-//                    QuartzEndpoint endpoint = (QuartzEndpoint) route.getEndpoint();
-////        if (oldExchange == null) {
-//                    List<ShedulerDTO> shedulers = new ArrayList<>();
-//                    ShedulerDTO sheduler = new ShedulerDTO();
-//                    sheduler.setRouteId(route.getId());
-//                    sheduler.setCron(endpoint.getCron());
-//                    sheduler.setStatus(endpoint.getStatus().toString());
-//                    exchange.getIn().setBody(sheduler);
                     System.out.println("next step");
-                }).end();
-//                .marshal().json(JsonLibrary.Jackson);
-//                .log("NOT SUPPORTED OPERATION");
+                })
+                .end();
 
         from(LAUNCHING_SHEDULER)
                 .marshal().json(JsonLibrary.Jackson)
@@ -52,14 +42,14 @@ public class ShedulerManagerService extends RouteBuilder {
         from(UPDATE_STATE_SHEDULER)
                 .marshal().json(JsonLibrary.Jackson)
                 .unmarshal().json(JsonLibrary.Jackson, ShedulerDTO.class)
-                .setBody(simple("controlbus:route?routeId=${header.routeId}&action=${body.action}"))
+                .setBody(simple("controlbus:route?routeId=${header.timerName}&action=${body.action}"))
                 .routingSlip(simple("${body}"));
 
         from(STOP_SHEDULER).to("controlbus:route?routeId=sheduler1&action=status").log("SUCCESSFUL STOPED ROUTE");
 
         from(DELETE_SHEDULER)
                 .process(exchange -> {
-                    exchange.getContext().removeRoute(exchange.getIn().getHeader("routeId", String.class));
+                    exchange.getContext().removeRoute(exchange.getIn().getHeader("timerName", String.class));
                 });
 //                .setBody(simple("${camelContext.removeRoute(${header.routeId})}"));
 

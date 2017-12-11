@@ -27,14 +27,16 @@ public class TestAgregation implements AggregationStrategy {
             EventDrivenConsumerRoute route = newExchange.getIn().getBody(EventDrivenConsumerRoute.class);
             QuartzEndpoint endpoint = (QuartzEndpoint) route.getEndpoint();
             ShedulerDTO sheduler = new ShedulerDTO();
-            sheduler.setShedulerId(route.getId());
+            sheduler.setTimerName(endpoint.getTriggerName());
+            sheduler.setGroupName(endpoint.getGroupName());
             sheduler.setCron(endpoint.getCron());
             sheduler.setStatus(route.getStatus().toString());
+            sheduler.setTriggerParameters(endpoint.getTriggerParameters());
+            sheduler.setJobParameters(endpoint.getJobParameters());
             shedulers.add(sheduler);
         }
 
         newExchange.getIn().setBody(shedulers);
-        System.out.println("Aggregator done");
         return newExchange;
     }
 }
