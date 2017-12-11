@@ -22,7 +22,10 @@ public class ShedulerBuilder {
             public void configure() throws Exception {
 
                 from(prepareUri(sheduler)).routeId(timerName)
-                        .to("activemq:Totally.Rocks")
+                        .process(exchange1 -> {
+                            exchange1.getIn().setBody("TEST for JMS CONSUMER");
+                        })
+                        .to("activemq:topic:Totally.Rocks?transferException=true")
                         .log("new sheduler working");
             }
         });
