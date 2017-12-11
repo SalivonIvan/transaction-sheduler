@@ -6,10 +6,10 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class QuartzConfig {
-    @Bean
+    @Bean("quartz2")
     public QuartzComponent getQuartzComponent() {
         QuartzComponent quartz = new QuartzComponent();
-        quartz.setStartDelayedSeconds(20);
+        quartz.setStartDelayedSeconds(5);
         return quartz;
     }
 }
