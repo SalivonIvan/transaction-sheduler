@@ -3,10 +3,12 @@ package com.datastech.transactionsheduler.route.service;
 import com.datastech.transactionsheduler.dto.ShedulerDTO;
 import org.apache.camel.Exchange;
 import org.apache.camel.Route;
+import org.apache.camel.component.quartz2.QuartzComponent;
 import org.apache.camel.component.quartz2.QuartzConsumer;
 import org.apache.camel.component.quartz2.QuartzEndpoint;
 import org.apache.camel.impl.EventDrivenConsumerRoute;
 import org.apache.camel.processor.aggregate.AggregationStrategy;
+import org.quartz.Scheduler;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,6 +28,7 @@ public class TestAgregation implements AggregationStrategy {
         if (newExchange.getIn().getBody(Route.class).getConsumer() instanceof QuartzConsumer) {
             EventDrivenConsumerRoute route = newExchange.getIn().getBody(EventDrivenConsumerRoute.class);
             QuartzEndpoint endpoint = (QuartzEndpoint) route.getEndpoint();
+            Scheduler component = endpoint.getComponent().getScheduler();
             ShedulerDTO sheduler = new ShedulerDTO();
             sheduler.setTimerName(endpoint.getTriggerName());
             sheduler.setGroupName(endpoint.getGroupName());
