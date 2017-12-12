@@ -9,7 +9,7 @@ public class QuartzConfig {
     @Bean("quartz2")
     public QuartzComponent getQuartzComponent() {
         QuartzComponent quartz = new QuartzComponent();
-        quartz.setStartDelayedSeconds(5);
+//        quartz.setStartDelayedSeconds(5);
         return quartz;
     }
 }

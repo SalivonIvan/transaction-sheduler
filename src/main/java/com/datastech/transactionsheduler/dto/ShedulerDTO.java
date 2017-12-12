@@ -1,9 +1,9 @@
 package com.datastech.transactionsheduler.dto;
 
 import lombok.Data;
+import org.quartz.Calendar;
 
 import java.io.Serializable;
-import java.util.Calendar;
 import java.util.Map;
 
 /**

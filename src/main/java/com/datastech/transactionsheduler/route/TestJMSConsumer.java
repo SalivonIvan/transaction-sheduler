@@ -11,10 +11,8 @@ public class TestJMSConsumer extends RouteBuilder {
     @Override
     public void configure() throws Exception {
         from("activemq:queue:Totally.Rocks")
-                .process(exchange -> {
-                    System.out.println("IN REQUEST:" + exchange.getIn().getBody(String.class));
-                })
-                .setBody(constant("RESPONSE for JMS PRODUCER"));
+                .setBody(constant("RESPONSE for JMS PRODUCER"))
+        .log("JOB[activemq:queue:Totally.Rocks] was send response");
 
     }
 }

@@ -2,7 +2,6 @@ package com.datastech.transactionsheduler.service;
 
 import com.datastech.transactionsheduler.dto.ShedulerDTO;
 import org.apache.camel.Exchange;
-import org.apache.camel.ExchangePattern;
 import org.apache.camel.builder.RouteBuilder;
 import org.springframework.stereotype.Component;
 
@@ -23,13 +22,8 @@ public class ShedulerBuilder {
             public void configure() throws Exception {
 
                 from(prepareUri(sheduler)).routeId(timerName)
-                        .process(exchange1 -> {
-                            String testData ="TEST for JMS CONSUMER";
-                            exchange1.getIn().setBody(testData);
-                            System.out.println(testData);
-                        })
-                        .to("activemq:queue:Totally.Rocks")
-                        .log("new sheduler working");
+                        .to(sheduler.getJobUri())
+                        .log("JOB[" + sheduler.getJobUri() + "] was invoke");
             }
         });
     }
@@ -60,6 +54,21 @@ public class ShedulerBuilder {
         }
         if (sheduler.getCron() != null)
             uri.append("cron=").append(sheduler.getCron()).append("&");
+        if (sheduler.getFireNow() != null)
+            uri.append("fireNow=").append(sheduler.getFireNow()).append("&");
+        if (sheduler.getDeleteJob() != null)
+            uri.append("deleteJob=").append(sheduler.getDeleteJob()).append("&");
+        if (sheduler.getPauseJob() != null)
+            uri.append("pauseJob=").append(sheduler.getPauseJob()).append("&");
+        if (sheduler.getDurableJob() != null)
+            uri.append("durableJob=").append(sheduler.getDurableJob()).append("&");
+        if (sheduler.getRecoverableJob() != null)
+            uri.append("recoverableJob=").append(sheduler.getRecoverableJob()).append("&");
+        if (sheduler.getUsingFixedCamelContextName() != null)
+            uri.append("usingFixedCamelContextName=").append(sheduler.getUsingFixedCamelContextName()).append("&");
+        if (sheduler.getCustomCalendar() != null)
+            uri.append("customCalendar=").append(sheduler.getCustomCalendar()).append("&");
+
         if (uri.charAt(uri.length() - 1) == '&')
             uri.deleteCharAt(uri.length() - 1);
         return uri.toString();
