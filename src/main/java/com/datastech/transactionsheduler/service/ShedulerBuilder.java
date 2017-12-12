@@ -2,6 +2,7 @@ package com.datastech.transactionsheduler.service;
 
 import com.datastech.transactionsheduler.dto.ShedulerDTO;
 import org.apache.camel.Exchange;
+import org.apache.camel.ExchangePattern;
 import org.apache.camel.builder.RouteBuilder;
 import org.springframework.stereotype.Component;
 
@@ -23,9 +24,11 @@ public class ShedulerBuilder {
 
                 from(prepareUri(sheduler)).routeId(timerName)
                         .process(exchange1 -> {
-                            exchange1.getIn().setBody("TEST for JMS CONSUMER");
+                            String testData ="TEST for JMS CONSUMER";
+                            exchange1.getIn().setBody(testData);
+                            System.out.println(testData);
                         })
-                        .to("activemq:topic:Totally.Rocks?transferException=true")
+                        .to("activemq:queue:Totally.Rocks")
                         .log("new sheduler working");
             }
         });
