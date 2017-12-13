@@ -1,9 +1,8 @@
 package com.datastech.transactionsheduler.route.service;
 
-import com.datastech.transactionsheduler.dto.ShedulerDTO;
+import com.datastech.transactionsheduler.dto.SchedulerDTO;
 import org.apache.camel.Exchange;
 import org.apache.camel.Route;
-import org.apache.camel.component.quartz2.QuartzComponent;
 import org.apache.camel.component.quartz2.QuartzConsumer;
 import org.apache.camel.component.quartz2.QuartzEndpoint;
 import org.apache.camel.impl.EventDrivenConsumerRoute;
@@ -19,7 +18,7 @@ import java.util.List;
 public class TestAgregation implements AggregationStrategy {
     @Override
     public Exchange aggregate(Exchange oldExchange, Exchange newExchange) {
-        List<ShedulerDTO> shedulers;
+        List<SchedulerDTO> shedulers;
         if (oldExchange==null)
             shedulers = new ArrayList<>();
         else
@@ -29,7 +28,7 @@ public class TestAgregation implements AggregationStrategy {
             EventDrivenConsumerRoute route = newExchange.getIn().getBody(EventDrivenConsumerRoute.class);
             QuartzEndpoint endpoint = (QuartzEndpoint) route.getEndpoint();
             Scheduler component = endpoint.getComponent().getScheduler();
-            ShedulerDTO sheduler = new ShedulerDTO();
+            SchedulerDTO sheduler = new SchedulerDTO();
             sheduler.setTimerName(endpoint.getTriggerName());
             sheduler.setGroupName(endpoint.getGroupName());
             sheduler.setCron(endpoint.getCron());

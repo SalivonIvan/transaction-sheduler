@@ -10,7 +10,7 @@ import java.util.Map;
  * Created by ivan salivon on 07.12.17.
  */
 @Data
-public class ShedulerDTO implements Serializable {
+public class SchedulerDTO implements Serializable {
 
     private static final long serialVersionUID = -1193629980047872623L;
 

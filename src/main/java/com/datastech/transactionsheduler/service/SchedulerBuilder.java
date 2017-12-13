@@ -1,6 +1,6 @@
 package com.datastech.transactionsheduler.service;
 
-import com.datastech.transactionsheduler.dto.ShedulerDTO;
+import com.datastech.transactionsheduler.dto.SchedulerDTO;
 import org.apache.camel.Exchange;
 import org.apache.camel.builder.RouteBuilder;
 import org.springframework.stereotype.Component;
@@ -9,13 +9,13 @@ import org.springframework.stereotype.Component;
  * Created by ivan salivon on 06.12.17.
  */
 @Component
-public class ShedulerBuilder {
+public class SchedulerBuilder {
 
     private String halfTimerName1 = "sheduler";
     private int halfTimerName2 = 0;
 
     public void addNewRoute(Exchange exchange) throws Exception {
-        ShedulerDTO sheduler = exchange.getIn().getBody(ShedulerDTO.class);
+        SchedulerDTO sheduler = exchange.getIn().getBody(SchedulerDTO.class);
         String timerName = prepareTimerName(sheduler);
         exchange.getContext().addRoutes(new RouteBuilder() {
             @Override
@@ -28,7 +28,7 @@ public class ShedulerBuilder {
         });
     }
 
-    private String prepareTimerName(ShedulerDTO sheduler) {
+    private String prepareTimerName(SchedulerDTO sheduler) {
         String timerName;
         if (sheduler.getTimerName() == null)
             timerName = halfTimerName1 + (++halfTimerName2);
@@ -37,7 +37,7 @@ public class ShedulerBuilder {
         return timerName;
     }
 
-    private String prepareUri(ShedulerDTO sheduler) {
+    private String prepareUri(SchedulerDTO sheduler) {
         StringBuilder uri = new StringBuilder("quartz2://");
         if (sheduler.getGroupName() != null)
             uri.append(sheduler.getGroupName()).append("/");

@@ -5,7 +5,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 @Component
-public class ShedulerRoute extends RouteBuilder {
+public class SchedulerRoute extends RouteBuilder {
 
     @Value("${iba.name.timer}")
     private String timerName;
@@ -18,6 +18,6 @@ public class ShedulerRoute extends RouteBuilder {
     public void configure() throws Exception {
         from("quartz2://" + timerName + "?cron=" + trigger + "&fireNow=true").routeId(timerName)
                 .to(jobUri)
-                .log("JOB[" + jobUri + "] for iba sheduler transfer was invoke at ${date:now}");
+                .log("JOB[" + jobUri + "] for iba scheduler transfer was invoke at ${date:now}");
     }
 }
