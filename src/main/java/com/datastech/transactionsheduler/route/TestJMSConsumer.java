@@ -1,12 +1,11 @@
 package com.datastech.transactionsheduler.route;
 
 import org.apache.camel.builder.RouteBuilder;
-import org.springframework.stereotype.Component;
 
 /**
  * Created by ivan salivon on 11.12.17.
  */
-@Component
+//@Component
 public class TestJMSConsumer extends RouteBuilder {
     @Override
     public void configure() throws Exception {
