@@ -14,7 +14,8 @@ public class CommonRestlet extends RouteBuilder {
     @Override
     public void configure() throws Exception {
         restConfiguration()
-                .component("restlet")
+//                .component("restlet")
+                .component("servlet")
                 .host("{{app.host}}")
                 .port("{{app.port}}")
                 .contextPath("{{app.contextPath}}")
