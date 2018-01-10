@@ -17,7 +17,7 @@ public class SchedulerRoute extends RouteBuilder {
     @Override
     public void configure() throws Exception {
         from("quartz2://" + timerName + "?cron=" + trigger + "&fireNow=true").routeId(timerName)
-                .to(jobUri)
+                .to("activemq:queue:" + jobUri)
                 .log("JOB[" + jobUri + "] for iba scheduler transfer was invoke at ${date:now}");
     }
 }
