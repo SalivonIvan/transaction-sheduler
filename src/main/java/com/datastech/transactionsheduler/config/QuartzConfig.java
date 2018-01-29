@@ -10,6 +10,7 @@ public class QuartzConfig {
     public QuartzComponent getQuartzComponent() {
         QuartzComponent quartz = new QuartzComponent();
 //        quartz.setStartDelayedSeconds(5);
+        quartz.setPropertiesFile("quartz.properties");
         return quartz;
     }
 }
