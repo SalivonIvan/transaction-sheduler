@@ -83,6 +83,33 @@
             <version>${camel.version}</version> <!-- use the same version as your Camel core version -->
         </dependency>
 
+        <!--TerracotaJobStore-->
+        <dependency>
+            <groupId>org.terracotta.toolkit</groupId>
+            <artifactId>terracotta-toolkit-api</artifactId>
+            <version>2.5</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.terracotta.toolkit</groupId>
+            <artifactId>terracotta-toolkit-api-internal</artifactId>
+            <version>1.12</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.terracotta</groupId>
+            <artifactId>product-upgradability-testing-utils</artifactId>
+            <version>0.9.0</version>
+            <!--<scope>test</scope>-->
+        </dependency>
+
+        <dependency>
+            <groupId>org.terracotta</groupId>
+            <artifactId>terracotta-toolkit-1.1-runtime</artifactId>
+            <version>2.0.0</version>
+        </dependency>
+
         <!--ActiveMQ -->
         <dependency>
             <groupId>org.apache.activemq</groupId>
@@ -111,6 +138,17 @@
         </dependency>
 
     </dependencies>
+
+    <repositories>
+        <repository>
+            <id>terracotta-snapshots</id>
+            <url>http://www.terracotta.org/download/reflector/snapshots</url>
+        </repository>
+        <repository>
+            <id>terracotta-releases</id>
+            <url>http://www.terracotta.org/download/reflector/releases</url>
+        </repository>
+    </repositories>
 
     <build>
         <plugins>
